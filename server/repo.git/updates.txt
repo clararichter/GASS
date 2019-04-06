@@ -1,0 +1,10 @@
+a74d02efe7c82e6352ed3a8defa2d3d91b229ff6
+dog refs/heads/master
+dog refs/tags/newtag
+dog refs/heads/master
+dog refs/tags/mytag
+dog refs/heads/master
+dog refs/tags/mytag
+dog refs/tags/mytag
+dog refs/tags/mytag
+dog refs/tags/mytag

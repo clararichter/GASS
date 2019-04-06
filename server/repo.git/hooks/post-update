@@ -1,0 +1,24 @@
+#!/bin/bash
+
+tag_updated="no"
+
+for var in "$@"
+do
+  if [ "$var" = "refs/tags/mytag"  ]
+  then
+    tag_updated="yes"
+  fi
+done
+
+if [ $tag_updated  = "no" ]
+  then
+  exit 0
+fi
+
+cd ..
+rm -f repo
+git clone repo.git repo
+cd repo
+git checkout mytag && cd .. && tar -cvf repo.tar repo
+
+
