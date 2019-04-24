@@ -1,0 +1,108 @@
+% Business Requirements
+%
+% The business requirements capture the system design constraints based on the
+% business' expectations for the final system. Use cases, user stories, and 
+% tables might be useful ways to document the business requirements.
+%
+% Business requirements should capture the needed functionality of the system
+% without prescribing the specific technical mechanisms that will achieve that
+% functionality.
+
+\section{Discussion}
+Computer science has different assignment submission challenges when compared to other disciplines.
+Most subjects grade a final deliverable that is represented by a single artifact: a worksheet, an essay, a poster, a video, etc.
+A computer science project is frequently a single program however the single program frequently involves multiple files with complex dependencies between the files.
+Learning management systems (LMS), like canvas, do not have good support for multi-file submissions.
+Additionally, industrial practitioners of programming have a specific set of tools, such as git and svn, for managing the collections of files.
+Familiarity with these tools can be an advantage for students seeking internship and eventual employment.
+
+\longname~(\acronym) will seek to integrate with the Canvas LMS to address the challenge of multi-file submission for computer science projects.
+To support the needs of honor code investigation and an archival record of student scoring, \acronym~ will store graded artifacts as assignment submissions in Canvas.
+Automated functional testing and resulting grades being pushed to Canvas is also seen as a nice to have future system capability.
+
+\acronym~ will provide an opportunity for students to gain familiarity with the use of version control.
+Underlying \acronym~ will be a widely used version control system.
+Students should be able to interact directly with the repository using standard command line tools, UI based tools, or IDE integrated tools.
+Many industry teams have added automated processes to reject commitments that do not conform to organizational standards and these technologies will be used to improve student conformance to submission expectations, easing the grading process.
+
+\section{Concerns}
+\acronym~ will be operating as a trusted system.
+Several security issues should be considered since system misbehavior or compromise could cause real impacts.
+
+\begin{enumerate}
+\item Impersonation - \acronym~ will need to access Canvas on the behalf of users. This introduces security challenges since exploitation of \acronym~ could cause significant damage to student grades. Impersonation of a faculty member would enable changing information on any current, former, or future course owned by that faculty member.
+
+\item Sensitive data - \acronym, through the Canvas integration, will have access to sensitive information. In addition to class grades for students in a managed course, confidential student data could be accessible.
+
+\item Repository isolation - Students are expected to do their own work in the interests of academic integrity. Version control makes inappropriate sharing easy. \acronym~ must take steps to make improper sharing hard to do and easy to detect.
+\end{enumerate}
+
+\section{Workflows}
+Several core workflows are envisioned for \acronym.
+These workflows map to major activities for administration of assignments.
+
+\subsection{Setup a Class}
+\label{wf_class_setup}
+\begin{enumerate}
+\item Instructor connects to \acronym
+\item Instructor asks to import a class
+\item \acronym~ gathers class list from canvas
+\item Instructor selects class to attach
+\item \acronym~ creates new linked course
+\end{enumerate}
+
+\subsection{Setup Assignment}
+\label{wf_assignment_setup}
+This workflow outlines the process of setting up an assignment for publication.
+\begin{enumerate}
+\item Instructor creates an empty repository via \acronym
+\item Instructor clones the repository and does work
+\item Instructor adds pre-submission check script
+\item Instructor optionally adds grading script
+\item Instructor pushes to \acronym
+\item \acronym~ performs pre-submission check
+\item If checks pass:
+    \begin{enumerate}
+    \item Push accepted
+    \item Ability to release to students is enabled
+    \end{enumerate}
+\item If checks fail:
+    \begin{enumerate}
+    \item Push rejected
+    \item Provide feedback on the failure
+    \end{enumerate}
+\end{enumerate}
+
+\subsection{Clone to Submit}
+\label{wf_student_submit}
+This workflow outlines the process of publishing an assignment to students.
+\begin{enumerate}
+\item Instructor releases starter code to student repositories
+\item Student get a push/pull URI from canvas for the assignment
+\item Student performs a git clone to get the starter code/repo
+\item Student modifies files and commits intermediate work
+\item Student attempts push to the repo
+\item \acronym~ performs pre-submission check
+\item If checks pass:
+    \begin{enumerate}
+    \item Allow push to server
+    \item Create a zip file of the submission
+    \item Submit zip to canvas on student behalf
+    \end{enumerate}
+\item If checks fail:
+    \begin{enumerate}
+    \item Reject the push
+    \item Provide some feedback on the failure
+    \end{enumerate}
+\end{enumerate}
+
+\subsection{Post-submission Feedback}
+\label{wf_post_submission}
+This workflow outlines the auto grading process.
+\begin{enumerate}
+\item Student submission is collected from the grading queue
+\item Submission is run with the test script
+\item Test results are collected by \acronym
+\item Results are formatted as a comment and added to canvas submission
+\item Results are scored and submission point total is changed in canvas
+\end{enumerate}

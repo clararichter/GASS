@@ -1,0 +1,67 @@
+% The main file for composing the sections
+\documentclass[pdftex,12pt,a4paper]{report}
+\usepackage[pdftex]{graphicx}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{setspace}
+\usepackage{enumitem}
+
+% Use CC fonts rather than default fonts... requires building with xelatex
+%\usepackage{fontspec}
+%\setmainfont[Ligatures=TeX]{Crimson Text}
+%\setsansfont[Ligatures=TeX]{Montserrat}
+
+% Set the headers to look sensible
+\usepackage{titlesec}
+\titleformat{\chapter}
+  {\normalfont\LARGE\bfseries}{\thechapter}{1em}{}
+\titlespacing*{\chapter}{0pt}{3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}
+
+% load the configuration information
+\input{configuration}
+
+%%% Template specific macros
+% Needed for the changelog script to work
+%\newcommand{\makechangelogline}[4]{\item[#1-#2] \textit{#3} #4}
+\newcommand{\makechangelogline}[4]{\item[#1] \textit{#3} #4}
+
+\begin{document}
+
+% Add the cover page
+\input{cover}
+
+% Add the executive summary
+\section{Executive Summary}
+\input{exec_summary}
+
+% Add the change log
+\section{changelog}
+\begin{description}
+\input{changelog}
+\end{description}
+
+% Indexing information
+\tableofcontents
+\listoffigures
+
+% Add the business requirements section
+\chapter{Business Requirements}
+\label{business_req}
+\input{business_req}
+
+% Add the technical requirements section
+\chapter{Technical Requirements}
+\label{technical_req}
+
+% Design
+\chapter{Design}
+\label{design}
+
+% Installation Guide
+\chapter{Installation}
+\label{installation}
+
+% Administration Guide
+\chapter{Administration}
+\label{admin}
+
+\end{document}
